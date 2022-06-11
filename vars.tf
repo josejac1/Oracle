@@ -1,9 +1,9 @@
 variable "AWS_ACCESS_KEY" {
-    "AKIAYCIWAHZXDV3Z65EC"
+    AKIAYCIWAHZXDV3Z65EC
 }
 
 variable "AWS_SECRET_KEY" {
-    "aRihaRGf/wTbue8LKlO3NaPwuYr0pWTdh1G3eZAU"
+    aRihaRGf/wTbue8LKlO3NaPwuYr0pWTdh1G3eZAU
 }
 
 variable "AWS_REGION" {

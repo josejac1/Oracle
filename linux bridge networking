@@ -14,7 +14,9 @@ ip -n blue link set veth-blue up
 ip netns red exec ping 192.168.3.1
 ip netns red exec route
 
-ip link add v-net-0 type bridge
+ip link add v-net-0 type bridge    #in docker this switch is known as bridge and can be seen if you execute docker network ls
+                                   #if you check ip link command from the underlying host it is just an another interface with name docker0
+ 
 #create a bridge network
 
 ip link set dev v-net-0 up
@@ -42,4 +44,15 @@ the namespaces are in private network, so in order for it to connect to other n/
 all the above steps are used by docker when a container is created...
 
 
+how is port mapping done in docker,,,
 
+using nat tables...
+iptables -t nat -A DOCKER -j DNAT --dport 8080 --to-destination 172.17.0.3:80
+
+-t ----> tables
+-A ----> Append
+-j ----> Jump
+DNAT---> Destination Address Resolution Translation
+
+
+iptables -t nat -A PREPROUTING -j DNAT  --dport 8080 --to-destination 80 

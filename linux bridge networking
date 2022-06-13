@@ -1,0 +1,45 @@
+ip netns add red
+ip netns add blue
+
+ip link add veth-red type veth peer name veth-blue
+ip link set veth-red netns red
+ip link set veth-blue netns blue
+ 
+ip -n red addr add 192.168.2.1 dev veth-red
+ip -n blue addr add 192.168.3.1 dev veth-blue
+
+ip -n red link set veth-red up
+ip -n blue link set veth-blue up
+
+ip netns red exec ping 192.168.3.1
+ip netns red exec route
+
+ip link add v-net-0 type bridge
+#create a bridge network
+
+ip link set dev v-net-0 up
+
+ip -n red link del veth-red
+#if one end of a pipe is deleted the other end is automatically deleted
+
+ip link add veth-red type veth peer name veth-red-br
+same for blue network aswell
+
+ip link set veth-red netns red
+ip link set veth-blue netns blue
+
+ip link set veth-red-br master v-net-0
+ip link set veth-blue-br master v-net-0
+
+ip -n red  addr add 192.0.0.0 dev veth-red
+ip -n blue addr add 192.1.0.0 dev veth-blue
+
+
+#we need to add an ip addr to the newly created bridge network for it to be accessabile from our host..from our host prespective it is just another interface that can be viewed using iplink command
+
+
+the namespaces are in private network, so in order for it to connect to other n/w it needs nat functionality
+all the above steps are used by docker when a container is created...
+
+
+

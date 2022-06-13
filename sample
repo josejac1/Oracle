@@ -13,8 +13,8 @@
       when: parse.stdout.line("database") != -1
   task:
      - name: 
-       copy:
-         src: /opt/db.txt
+       template:
+         src: "{{ 
          dest: /opt/host.txt
        when: parse.stdout.line("application") != -1
   loop: 

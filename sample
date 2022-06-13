@@ -1,0 +1,26 @@
+-
+  hosts: all
+  tasks:
+    - name: this to parse the /opt/role.txt
+      command: cat /opt/role.txt
+      register: parse
+   
+  tasks:
+    - name: 
+      copy:
+        src: /opt/app.txt #This is application server
+        dest: /opt/host.txt
+      when: parse.stdout.line("database") != -1
+  task:
+     - name: 
+       copy:
+         src: /opt/db.txt
+         dest: /opt/host.txt
+       when: parse.stdout.line("application") != -1
+  loop: 
+    - ip1
+    - ip2
+    - ip3
+       
+  
+  

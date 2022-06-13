@@ -1,0 +1,28 @@
+---
+    -
+       name: ansible loops example
+       hosts: web_hosts
+       tasks: 
+         - name: example of anisble loops
+           user: name='{{ item.name }}' uid='{{ item.uid }}' state=present
+           loop:
+             - name: jack
+               uid: 001
+             - name: jacob
+               uid: 002
+             - name: oracle
+               uid: 003
+             - name: raket
+               uid: 004
+   -  
+      name: same task using with_items
+      hosts: web_nodes
+      tasks:
+        - name: create users using with_item
+          user: name= '{{ item.name }}'  state=present
+          with_items:
+            - jack
+            - jacob
+            - oracle
+            - raket
+            

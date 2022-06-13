@@ -1,0 +1,19 @@
+-  
+  name: ansible-modules
+  hosts: web-servers
+  tasks:
+    - name: "Service module example"
+      service: name=httpd state=started
+    
+    - name: "line in file module example"
+      lineinfile:
+         path: /etc/resolv.conf
+         line: nameserver 192.168.1.5
+    - name: "script module execution
+      script: /jack/local/jack.sh
+      args:
+        creates: /jack/local/jack.sh
+    - name: "command module example"
+      command: cat resolv.conf chdir=/etc
+      
+    

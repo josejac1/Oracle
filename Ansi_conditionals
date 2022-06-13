@@ -1,0 +1,33 @@
+- 
+   name: ansible conditionals example
+   hosts: all
+   vars:
+    packages:
+     - name: nginx
+       required: True
+     - name: mysql
+       required: True
+     - name: apache
+       required: False
+   tasks:
+    - name: Install Nginx on Debian
+      apt:
+        name: nginx
+        state: present
+      when: ansible_os_family == "Debian"
+      
+    - name: Install nginx on Redhat
+      yum:
+        name: nginx
+        state: present
+      when: ansible_os_family == "Redhat" or ansible_os_family == "suse"
+      
+   tasks:
+      - name: Install "{{item.name}}" on Debian
+        apt:
+          name: "{{item.name}}"
+          state: present
+        when: item.required == True
+        loop: "{{ packages }}"
+     
+      

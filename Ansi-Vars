@@ -1,0 +1,10 @@
+-  
+   name: "Variables play book"
+   hosts: all
+   vars:
+     dns_host: 192.168.1.0
+   tasks:
+     - name: "adding new dns enrty to resolv.conf file"
+       lineinfile:
+          path: /etc/resolv
+          line: 'namserver {{dns_host}}'
